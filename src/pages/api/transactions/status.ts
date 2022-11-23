@@ -8,7 +8,12 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   }
 }
 
+// webhook
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
+  const { transactionId, status } = req.body || {};
+  if (!transactionId || !status) {
+    return res.status(400).json({ message: "Missing transactionId or status" });
+  }
   try {
     return res.status(200).json({ qrCode: "Hello World" });
   } catch (error) {
