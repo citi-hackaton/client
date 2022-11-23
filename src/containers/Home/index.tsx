@@ -1,23 +1,19 @@
 import styled from "@emotion/styled";
-import { Button, Typography } from "@mui/material";
-import React, { useContext } from "react";
-import Cart from "./Cart/Cart";
-import CartContext from "./Cart/CartContext";
+import { useState } from "react";
+import CartView from "./Cart/CartView";
+import QRCodeSection from "./QRCodeSection";
 
 const Home = () => {
-  const { state } = useContext(CartContext);
-  const totalPrice = state.products.reduce((acc, product) => {
-    return acc + product.price * product.quantity;
-  }, 0);
+  const [isCartView, setIsCartView] = useState(true);
+  const [qrCode, setQrCode] = useState("");
   return (
     <StyledContainer>
       <StyledWrapper>
-        <Typography variant="h2">Client's cart</Typography>
-        <Typography variant="h4">Total: {totalPrice}$</Typography>
-        <Cart />
-        <Button variant="contained" color="primary">
-          Buy products
-        </Button>
+        {isCartView ? (
+          <CartView setIsCartView={setIsCartView} setQrCode={setQrCode} />
+        ) : (
+          <QRCodeSection setIsCartView={setIsCartView} qrCode={qrCode} />
+        )}
       </StyledWrapper>
     </StyledContainer>
   );
