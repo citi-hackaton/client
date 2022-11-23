@@ -5,12 +5,18 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "@/utils/materialUiTheme";
 import createEmotionCache from "@/utils/createEmotionCache";
+import WebhookResponse from "@/types/WebhookResponse";
 
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+
+declare global {
+  var mockDb: WebhookResponse[];
+}
+globalThis.mockDb = [];
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;

@@ -7,13 +7,18 @@ import QRCodeSection from "./QRCodeSection";
 const Home = () => {
   const [isCartView, setIsCartView] = useState(true);
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(null);
+  console.log(paymentDetails);
   return (
     <StyledContainer>
       <StyledWrapper>
         {isCartView ? (
           <CartView setIsCartView={setIsCartView} setPaymentDetails={setPaymentDetails} />
         ) : (
-          <QRCodeSection setIsCartView={setIsCartView} paymentDetails={paymentDetails} />
+          <QRCodeSection
+            setIsCartView={setIsCartView}
+            paymentDetails={paymentDetails}
+            setPaymentDetails={setPaymentDetails}
+          />
         )}
       </StyledWrapper>
     </StyledContainer>

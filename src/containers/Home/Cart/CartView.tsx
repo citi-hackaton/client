@@ -10,10 +10,9 @@ const CartView = ({ setIsCartView, setPaymentDetails }: CartViewProps) => {
   const totalPrice = state.products.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
-
   const handleBuyProducts = () => {
     axios
-      .post("/api/transactions/buy", {
+      .post("api/transactions/buy", {
         amount: totalPrice,
       })
       .then(({ data }) => {

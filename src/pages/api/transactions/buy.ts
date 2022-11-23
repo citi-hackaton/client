@@ -22,21 +22,25 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   }
   try {
     const purchaseDescription = "Example purchase description";
-    const { data } = await axios.post<QRRPResponse>(
-      generateQRCodeEndpoint,
-      {
-        transactionData: {
-          amount: purchaseAmount,
-          description: purchaseDescription,
-        },
-      },
-      {
-        headers: {
-          Authorization: `X-QRPP-Api-Key ${process.env.QRPP_API_KEY as string}`,
-        },
-      }
-    );
-    return res.status(200).json({ qrCode: data.qrCode });
+    // const { data } = await axios.post<QRRPResponse>(
+    //   generateQRCodeEndpoint,
+    //   {
+    //     transactionData: {
+    //       amount: purchaseAmount,
+    //       description: purchaseDescription,
+    //     },
+    //   },
+    //   {
+    //     headers: {
+    //       Authorization: `X-QRPP-Api-Key ${process.env.QRPP_API_KEY as string}`,
+    //     },
+    //   }
+    // );
+    const data = {
+      transactionId: "53b99a32-637c-45a5-9564-cde6dc06179b",
+    };
+    globalThis.mockDb.push({ ...data, action: "pending" });
+    return res.status(200).json(data);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });

@@ -10,13 +10,19 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
 // webhook
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-  const { transactionId, status } = req.body || {};
-  if (!transactionId || !status) {
-    return res.status(400).json({ message: "Missing transactionId or status" });
+  const { transactionId, action } = req.body || {};
+  if (!transactionId || !action) {
+    return res.status(400).json({ message: "Missing transactionId or action" });
   }
   try {
-    return res.status(200).json({ qrCode: "Hello World" });
+    globalThis.mockDb = globalThis.mockDb.map((x) => {
+      if (x.transactionId === transactionId) {
+        return { ...x, action };
+      }
+      return x;
+    });
+    return res.status(200).json({ message: "OK" });
   } catch (error) {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: error });
   }
 }
