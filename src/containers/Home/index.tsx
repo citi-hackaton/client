@@ -1,3 +1,4 @@
+import PaymentDetails from "@/types/PaymentDetails";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import CartView from "./Cart/CartView";
@@ -5,14 +6,19 @@ import QRCodeSection from "./QRCodeSection";
 
 const Home = () => {
   const [isCartView, setIsCartView] = useState(true);
-  const [qrCode, setQrCode] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(null);
+  console.log(paymentDetails);
   return (
     <StyledContainer>
       <StyledWrapper>
         {isCartView ? (
-          <CartView setIsCartView={setIsCartView} setQrCode={setQrCode} />
+          <CartView setIsCartView={setIsCartView} setPaymentDetails={setPaymentDetails} />
         ) : (
-          <QRCodeSection setIsCartView={setIsCartView} qrCode={qrCode} />
+          <QRCodeSection
+            setIsCartView={setIsCartView}
+            paymentDetails={paymentDetails}
+            setPaymentDetails={setPaymentDetails}
+          />
         )}
       </StyledWrapper>
     </StyledContainer>

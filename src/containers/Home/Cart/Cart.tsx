@@ -4,8 +4,7 @@ import CartContext from "./CartContext";
 import Product from "./Product";
 
 const Cart = () => {
-  const { state, dispatch } = useContext(CartContext);
-  console.log(state);
+  const { state } = useContext(CartContext);
   return (
     <StyledContainer>
       <StyledWrapper>

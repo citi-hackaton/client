@@ -3,22 +3,21 @@ import React, { Dispatch, SetStateAction, useContext } from "react";
 import Cart from "./Cart";
 import CartContext from "./CartContext";
 import axios from "axios";
+import PaymentDetails from "@/types/PaymentDetails";
 
-const CartView = ({ setIsCartView, setQrCode }: CartViewProps) => {
+const CartView = ({ setIsCartView, setPaymentDetails }: CartViewProps) => {
   const { state } = useContext(CartContext);
   const totalPrice = state.products.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
-
   const handleBuyProducts = () => {
     axios
-      .post("/api/buy", {
-        products: state.products,
+      .post("api/transactions/buy", {
+        amount: totalPrice,
       })
       .then(({ data }) => {
-        console.log(data);
         setIsCartView(false);
-        setQrCode(data);
+        setPaymentDetails({ ...data, status: "Waiting for payment" });
       })
       .catch((err) => {
         console.log(err);
@@ -39,7 +38,7 @@ const CartView = ({ setIsCartView, setQrCode }: CartViewProps) => {
 
 interface CartViewProps {
   setIsCartView: Dispatch<SetStateAction<boolean>>;
-  setQrCode: Dispatch<SetStateAction<string>>;
+  setPaymentDetails: Dispatch<SetStateAction<PaymentDetails | null>>;
 }
 
 export default CartView;
