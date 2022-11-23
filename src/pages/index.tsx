@@ -1,9 +1,13 @@
 import MainLayout from "@/components/Layouts/MainLayout";
+import Home from "@/containers/Home";
+import CartProvider from "@/containers/Home/Cart/CartProvider";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <MainLayout>
-      <h1>Home</h1>
+      <CartProvider>
+        <Home />
+      </CartProvider>
     </MainLayout>
   );
 }
