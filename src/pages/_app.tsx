@@ -13,11 +13,6 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-declare global {
-  var mockDb: WebhookResponse[];
-}
-globalThis.mockDb = [];
-
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (

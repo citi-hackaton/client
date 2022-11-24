@@ -1,5 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import WebhookResponse from "@/types/WebhookResponse";
+
+declare global {
+  var mockDb: WebhookResponse[];
+}
+globalThis.mockDb = [];
 
 const generateQRCodeEndpoint = `${process.env.QRPP_ENDPOINT_URL}/qrPayments/initializeBusinessTransaction`;
 
