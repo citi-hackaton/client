@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-const generateQRCodeEndpoint = `${process.env.QRPP_ENDPOINT_URL}/generateQrCode`;
+const generateQRCodeEndpoint = `${process.env.QRPP_ENDPOINT_URL}/qrPayments/initializeBusinessTransaction`;
 
 interface QRRPResponse {
-  qrCode: string;
+  transactionId: string;
 }
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -22,27 +22,24 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   }
   try {
     const purchaseDescription = "Example purchase description";
-    // const { data } = await axios.post<QRRPResponse>(
-    //   generateQRCodeEndpoint,
-    //   {
-    //     transactionData: {
-    //       amount: purchaseAmount,
-    //       description: purchaseDescription,
-    //     },
-    //   },
-    //   {
-    //     headers: {
-    //       Authorization: `X-QRPP-Api-Key ${process.env.QRPP_API_KEY as string}`,
-    //     },
-    //   }
-    // );
-    const data = {
-      transactionId: "53b99a32-637c-45a5-9564-cde6dc06179b",
-    };
-    globalThis.mockDb.push({ ...data, action: "pending" });
+    const { data } = await axios.post<QRRPResponse>(
+      generateQRCodeEndpoint,
+      {
+        transactionData: {
+          amount: purchaseAmount,
+          description: purchaseDescription,
+          isRejectable: true,
+        },
+      },
+      {
+        headers: {
+          Authorization: `X-QRPP-Api-Key ${process.env.QRPP_SECRET_KEY as string}`,
+        },
+      }
+    );
+    globalThis.mockDb.push({ transactionId: data.transactionId, action: "PENDING" });
     return res.status(200).json(data);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }

@@ -16,6 +16,7 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   if (Array.isArray(transactionId)) {
     return res.status(400).json({ message: "transactionId must be a string" });
   }
+  console.log(globalThis.mockDb);
   try {
     return res.status(200).json(globalThis.mockDb.find((x) => x.transactionId === transactionId));
   } catch (error) {
