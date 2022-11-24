@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import WebhookResponse from "@/types/WebhookResponse";
+import DatabaseInstance from "@/lib/DatabaseInstance";
 
 declare global {
   var mockDb: WebhookResponse[];
@@ -28,6 +29,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   }
   try {
     const purchaseDescription = "Example purchase description";
+    const db = DatabaseInstance.getInstance().getConnection();
     const { data } = await axios.post<QRRPResponse>(
       generateQRCodeEndpoint,
       {
@@ -43,7 +45,13 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         },
       }
     );
-    globalThis.mockDb.push({ transactionId: data.transactionId, action: "PENDING" });
+    await db.transaction.create({
+      data: {
+        transactionId: data.transactionId,
+        amount: purchaseAmount,
+        status: "PENDING",
+      },
+    });
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
