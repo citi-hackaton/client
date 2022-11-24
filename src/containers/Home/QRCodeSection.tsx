@@ -20,7 +20,7 @@ const QRCodeSection = ({
     const { data } = await axios.get<WebhookResponse>(
       `api/transactions/status/${paymentDetails?.transactionId}`
     );
-    setPaymentDetails({ ...data, status: data.action });
+    setPaymentDetails({ ...data, status: data.status });
   }, []);
 
   useIntervalAsync(checkPaymentStatus, 1000);
