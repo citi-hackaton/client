@@ -27,6 +27,9 @@ const StyledContainer = styled("section")`
 const StyledWrapper = styled("div")`
   display: flex;
   gap: 30px;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 export default Cart;

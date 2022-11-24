@@ -4,6 +4,7 @@ import Cart from "./Cart";
 import CartContext from "./CartContext";
 import axios from "axios";
 import PaymentDetails from "@/types/PaymentDetails";
+import styled from "@emotion/styled";
 
 const CartView = ({ setIsCartView, setPaymentDetails }: CartViewProps) => {
   const { state } = useContext(CartContext);
@@ -29,12 +30,18 @@ const CartView = ({ setIsCartView, setPaymentDetails }: CartViewProps) => {
       <Typography variant="h2">Client's cart</Typography>
       <Typography variant="h4">Total: {totalPrice}$</Typography>
       <Cart />
-      <Button variant="contained" color="primary" onClick={handleBuyProducts}>
+      <StyledButton variant="contained" color="primary" onClick={handleBuyProducts}>
         Buy products
-      </Button>
+      </StyledButton>
     </>
   );
 };
+
+const StyledButton = styled(Button)`
+  @media (max-width: 1000px) {
+    margin-top: 20px;
+  }
+`;
 
 interface CartViewProps {
   setIsCartView: Dispatch<SetStateAction<boolean>>;
