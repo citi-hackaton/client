@@ -1,6 +1,6 @@
 interface WebhookResponse {
   transactionId: string;
-  action: "pending" | "accepted" | "rejected" | "timed_out";
+  action: "PENDING" | "ACCEPTED" | "REJECTED" | "TIMED_OUT";
 }
 
 export default WebhookResponse;
