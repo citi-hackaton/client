@@ -39,7 +39,7 @@ const QRCodeSection = ({
         {paymentDetails.status === "PENDING" && <CircularProgress />}
         {paymentDetails.status === "ACCEPTED" && (
           <Typography variant="h4" fontWeight={600}>
-            You successfully paid!
+            You successfully paid! Thank you!
           </Typography>
         )}
       </StyledSectionSplit>
