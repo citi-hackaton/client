@@ -28,7 +28,7 @@ const QRCodeSection = ({
 
   return (
     <StyledContainer>
-      <QRCode value={paymentDetails.transactionId} />
+      <QRCode value={JSON.stringify({ transactionId: paymentDetails.transactionId })} />
       <StyledSectionSplit>
         <Typography variant="h5" fontWeight={700}>
           Scan the QR code to pay
